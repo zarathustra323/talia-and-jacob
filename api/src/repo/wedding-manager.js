@@ -4,7 +4,7 @@ const Joi = require('../joi');
 const PaginableRepo = require('./-paginable');
 const UserRepo = require('./user');
 const WeddingRepo = require('./wedding');
-const fields = require('../schema/wedding-user/fields');
+const fields = require('../schema/wedding-manager/fields');
 const userFields = require('../schema/user/fields');
 const userEventFields = require('../schema/user-event/fields');
 
@@ -68,26 +68,26 @@ class WeddingManagerRepo extends PaginableRepo {
 
   /**
    * @param {object} params
-   * @param {string|ObjectId} params.orgId
+   * @param {string|ObjectId} params.weddingId
    * @param {string|ObjectId} params.userId
    * @param {string[]} [params.roles]
    * @param {object} [params.options]
    */
   async checkRole(params = {}) {
     const {
-      orgId,
+      weddingId,
       userId,
       roles,
       options,
     } = await validateAsync(Joi.object({
-      orgId: fields.orgId.required(),
+      weddingId: fields.weddingId.required(),
       userId: fields.userId.required(),
       roles: Joi.array().items(fields.role).default([]),
       options: Joi.object().default({}),
     }).required(), params);
 
     const member = await this.findOneFor({
-      orgId,
+      weddingId,
       userId,
       options: { ...options, projection: { role: 1 } },
     });
@@ -230,19 +230,19 @@ class WeddingManagerRepo extends PaginableRepo {
   /**
    *
    * @param {object} params
-   * @param {string|ObjectId} params.orgId
+   * @param {string|ObjectId} params.weddingId
    * @param {string|ObjectId} params.userId
    * @param {string} [params.status=Active]
    * @param {object} params.options
    */
   async findOneFor(params = {}) {
     const {
-      orgId,
+      weddingId,
       userId,
       status,
       options,
     } = await validateAsync(Joi.object({
-      orgId: fields.orgId.required(),
+      weddingId: fields.weddingId.required(),
       userId: fields.userId.required(),
       status: fields.status.default('Active'),
       options: Joi.object().default({}),
@@ -250,7 +250,7 @@ class WeddingManagerRepo extends PaginableRepo {
 
     const query = {
       'user._id': userId,
-      'org._id': orgId,
+      'wedding._id': weddingId,
       status,
     };
     return this.findOne({ query, options });
@@ -259,18 +259,18 @@ class WeddingManagerRepo extends PaginableRepo {
   /**
    *
    * @param {object} params
-   * @param {ObjectID} params.orgId
+   * @param {ObjectID} params.weddingId
    * @param {string[]} [params.status]
    * @param {object} [params.options]
    */
-  async paginateForOrg(params = {}) {
-    const { orgId, status, options } = await validateAsync(Joi.object({
-      orgId: fields.orgId.required(),
+  async paginateForWedding(params = {}) {
+    const { weddingId, status, options } = await validateAsync(Joi.object({
+      weddingId: fields.weddingId.required(),
       status: Joi.array().items(fields.status).default([]),
       options: Joi.object().default({}),
     }).required(), params);
     const query = {
-      'org._id': orgId,
+      'wedding._id': weddingId,
       ...(status.length && { status: { $in: status } }),
     };
     return this.paginate({ ...options, query });

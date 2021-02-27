@@ -5,7 +5,7 @@ const repos = require('../../repo');
 module.exports = async ({ req }) => {
   const auth = new AuthContext({
     header: req.get('authorization'),
-    userRepo: repos.user,
+    weddingManagerRepo: repos.weddingManager,
   });
   const [loaders] = await Promise.all([
     createLoaders(),

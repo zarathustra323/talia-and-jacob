@@ -5,11 +5,12 @@ class AuthContext {
   /**
    * @param {object} params
    * @param {string} [params.header] The Authorization header value
-   * @param {UserRepo} params.userRepo The user repository
+   * @param {WeddingManagerRepoRepo} params.weddingManagerRepo The wedding manager repo.
    */
-  constructor({ header, userRepo } = {}) {
+  constructor({ header, weddingManagerRepo } = {}) {
     this.header = header;
-    this.userRepo = userRepo;
+    this.weddingManagerRepo = weddingManagerRepo;
+    this.userRepo = weddingManagerRepo.userRepo;
     this.user = new UserContext();
   }
 
@@ -45,14 +46,42 @@ class AuthContext {
    * @todo This is a preliminary interface for checking roles and is not complete.
    * @todo Update to work in a more elegant way.
    * @param {string} action
+   * @param {object} [params]
    */
-  async checkCan(action) {
+  async checkCan(action, params = {}) {
+    const checkParam = (key) => {
+      if (!params[key]) throw new Error(`Unable to authorize: no '${key}' was provided.`);
+    };
+
+    const checkManagerRole = async (weddingId, roles) => {
+      checkParam('weddingId');
+      return this.checkWeddingManagerRole({ weddingId, roles });
+    };
+
     switch (action) {
       case 'wedding:register':
         return this.isValid(); // must be logged-in
+      case 'wedding-manager:list-for-wedding':
+        return checkManagerRole(params.weddingId); // any role
       default:
         throw new Error(`Unable to find an authorization action for '${action}'`);
     }
+  }
+
+  /**
+   * @param {object} params
+   * @param {*} params.weddingId
+   * @param {*} params.roles
+   */
+  async checkWeddingManagerRole({ weddingId, roles }) {
+    this.check();
+    const userId = this.getUserId();
+    const hasRole = await this.weddingManagerRepo.checkRole({
+      weddingId,
+      userId,
+      roles,
+    });
+    if (!hasRole) throw AuthContext.error('You do not have the proper organization permissions to perform this operation.', 403);
   }
 
   /**

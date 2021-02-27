@@ -18,9 +18,9 @@ type Wedding implements ChangedDateInterface @interfaceFields {
   "The unique ID of the Wedding."
   id: ObjectID! @project(field: "_id")
   "The title of the wedding."
-  title: String!
+  title: String! @project
   "The unique slug of this wedding. Is used for generating the sub-domain of the wedding website."
-  slug: String!
+  slug: String! @project
 }
 
 input RegisterNewWeddingMutationInput {

@@ -39,6 +39,16 @@ enum WeddingManagerStatusEnum {
 type WeddingManager implements ChangedDateInterface @interfaceFields {
   "The internal wedding manager identifier."
   id: ObjectID! @project(field: "_id")
+  "The wedding the manager belongs to."
+  wedding: Wedding! @project
+  "The user that manages the wedding."
+  user: User! @project
+  "The wedding manager role."
+  role: WeddingManagerRoleEnum! @project
+  "The current status of the wedding manager."
+  status: WeddingManagerStatusEnum! @project
+  "The wedding manager invitation details, if applicable."
+  invitation: WeddingManagerInvitation @project(field: "invite")
 }
 
 type WeddingManagerConnection @projectUsing(type: "WeddingManager") {
@@ -55,6 +65,15 @@ type WeddingManagerEdge {
   node: WeddingManager!
   "The opaque cursor value for this record edge."
   cursor: String!
+}
+
+type WeddingManagerInvitation {
+  "The user that sent the invitation."
+  sentBy: User! @project
+  "The date the invitation was sent."
+  sentAt: Date! @project
+  "The date the invite was accepted."
+  acceptedAt: Date @project
 }
 
 input ManagersForWeddingQueryInput {
