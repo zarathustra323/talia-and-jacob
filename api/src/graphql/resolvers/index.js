@@ -8,6 +8,8 @@ const user = require('./user');
 const wedding = require('./wedding');
 const weddingUser = require('./wedding-user');
 
+const genericResolveType = (_, __, info) => info.returnType.ofType.name;
+
 module.exports = merge(
   pagination,
 
@@ -18,6 +20,16 @@ module.exports = merge(
   {
     Date: GraphQLDate,
     ObjectID: GraphQLObjectID(ObjectId),
+
+    /**
+     *
+     */
+    ChangedDateInterface: {
+      /**
+       *
+       */
+      __resolveType: genericResolveType,
+    },
 
     /**
      *

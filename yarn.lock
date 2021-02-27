@@ -1021,6 +1021,11 @@
   dependencies:
     burner-email-providers "^1.0.38"
 
+"@parameter1/graphql-directive-interface-fields@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@parameter1/graphql-directive-interface-fields/-/graphql-directive-interface-fields-1.0.9.tgz#a3ca9b5d5bce4e9fc09a5eb0937d222e1c585c5c"
+  integrity sha512-axtTsebPtgC7Zt8wnpfKbvDtlMRfzigikMTGZ3iTwWYlbpqjsViWr1TzBL/08R1K2kwA02c7bSxVm4McIBQycA==
+
 "@parameter1/graphql-directive-project@^1.0.14":
   version "1.0.14"
   resolved "https://registry.yarnpkg.com/@parameter1/graphql-directive-project/-/graphql-directive-project-1.0.14.tgz#3fcfc381316f7ec8ea6aa4afe74df2c689944a32"

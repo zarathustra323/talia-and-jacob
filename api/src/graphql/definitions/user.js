@@ -18,7 +18,7 @@ extend type Mutation {
   sendUserLoginLink(input: SendUserLoginLinkMutationInput!): String!
 }
 
-type User {
+type User implements ChangedDateInterface @interfaceFields {
   "The unique ID of the User."
   id: ObjectID! @project(field: "_id")
   "The email address of the User. This value is required and is unique."
@@ -37,10 +37,6 @@ type User {
   lastLoggedInAt: Date @project
   "The timestamp (in milliseconds) when the user was last seen accessing the system."
   lastSeenAt: Date @project
-  "The timestamp (in milliseconds) when this user was created."
-  createdAt: Date @project
-  "The timestamp (in milliseconds) when this user was last updated."
-  updatedAt: Date @project
 }
 
 type UserAuth {
