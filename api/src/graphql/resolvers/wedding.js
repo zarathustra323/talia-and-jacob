@@ -1,4 +1,4 @@
-const { WeddingUserRoleEnum: WeddingUserRoles } = require('./wedding-user');
+const { WeddingManagerRoleEnum: WeddingManagerRoles } = require('./wedding-manager');
 
 module.exports = {
   /**
@@ -22,10 +22,10 @@ module.exports = {
       await auth.checkCan('wedding:register');
       const userId = auth.getUserId();
       const { title, slug } = input;
-      const { wedding } = await repos.weddingUser.registerNewWedding({
+      const { wedding } = await repos.weddingManager.registerNewWedding({
         payload: { title, slug },
         userId,
-        role: WeddingUserRoles.OWNER,
+        role: WeddingManagerRoles.OWNER,
       });
       return wedding;
     },

@@ -5,7 +5,7 @@ const Token = require('./token');
 const User = require('./user');
 const UserEvent = require('./user-event');
 const Wedding = require('./wedding');
-const WeddingUser = require('./wedding-user');
+const WeddingManager = require('./wedding-manager');
 
 const token = new Token({ client, dbName });
 const userEvent = new UserEvent({ client, dbName });
@@ -19,7 +19,7 @@ const user = new User({
 
 const wedding = new Wedding({ client, dbName });
 
-const weddingUser = new WeddingUser({
+const weddingManager = new WeddingManager({
   client,
   dbName,
   userRepo: user,
@@ -31,5 +31,5 @@ module.exports = {
   user,
   userEvent,
   wedding,
-  weddingUser,
+  weddingManager,
 };

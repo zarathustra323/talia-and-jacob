@@ -11,7 +11,7 @@ module.exports = {
 
     { updatedAt: 1, _id: 1 },
   ],
-  'wedding-users': [
+  'wedding-managers': [
     [{ 'user._id': 1, 'wedding._id': 1 }, { unique: true }],
     { 'wedding._id': 1 },
 

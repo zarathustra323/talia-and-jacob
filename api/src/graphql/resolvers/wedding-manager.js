@@ -2,7 +2,7 @@ module.exports = {
   /**
    *
    */
-  WeddingUserRoleEnum: {
+  WeddingManagerRoleEnum: {
     OWNER: 'Owner',
     MEMBER: 'Member',
     RESTRICTED: 'Restricted',
@@ -11,7 +11,7 @@ module.exports = {
   /**
    *
    */
-  WeddingUserSortFieldEnum: {
+  WeddingManagerSortFieldEnum: {
     ID: '_id',
     INVITE_SENT_AT: 'invite.sentAt',
     WEDDING_TITLE: 'wedding.title',
@@ -22,7 +22,7 @@ module.exports = {
   /**
    *
    */
-  WeddingUserStatusEnum: {
+  WeddingManagerStatusEnum: {
     ACTIVE: 'Active',
     INVITED: 'Invited',
   },

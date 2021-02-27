@@ -5,7 +5,7 @@ const pagination = require('@parameter1/graphql-mongodb-pagination/definitions')
 
 const user = require('./user');
 const wedding = require('./wedding');
-const weddingUser = require('./wedding-user');
+const weddingManager = require('./wedding-manager');
 
 module.exports = gql`
 
@@ -37,6 +37,6 @@ type Mutation {
 
 ${user}
 ${wedding}
-${weddingUser}
+${weddingManager}
 
 `;

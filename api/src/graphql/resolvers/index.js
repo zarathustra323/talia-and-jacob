@@ -6,7 +6,7 @@ const pagination = require('@parameter1/graphql-mongodb-pagination/resolvers');
 
 const user = require('./user');
 const wedding = require('./wedding');
-const weddingUser = require('./wedding-user');
+const weddingManager = require('./wedding-manager');
 
 const genericResolveType = (_, __, info) => info.returnType.ofType.name;
 
@@ -15,7 +15,7 @@ module.exports = merge(
 
   user,
   wedding,
-  weddingUser,
+  weddingManager,
 
   {
     Date: GraphQLDate,

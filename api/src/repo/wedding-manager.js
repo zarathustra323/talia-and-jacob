@@ -8,7 +8,7 @@ const fields = require('../schema/wedding-user/fields');
 const userFields = require('../schema/user/fields');
 const userEventFields = require('../schema/user-event/fields');
 
-class WeddingUserRepo extends PaginableRepo {
+class WeddingManagerRepo extends PaginableRepo {
   /**
    *
    */
@@ -19,8 +19,8 @@ class WeddingUserRepo extends PaginableRepo {
     weddingRepo,
   } = {}) {
     super({
-      name: 'wedding-user',
-      collectionName: 'wedding-users',
+      name: 'wedding-manager',
+      collectionName: 'wedding-managers',
       dbName,
       client,
       collatableFields: ['wedding.title', 'user.email'],
@@ -98,12 +98,12 @@ class WeddingUserRepo extends PaginableRepo {
 
   /**
    * @param {object} params
-   * @param {object} params.weddingId The wedding to become a user of.
+   * @param {object} params.weddingId The wedding to become a manager of.
    * @param {string|ObjectId} params.userId The user id.
-   * @param {string} params.role The wedding user role.
-   * @param {string} params.status The wedding user status.
+   * @param {string} params.role The wedding manager role.
+   * @param {string} params.status The wedding manager status.
    * @param {string|ObjectId} [params.invitedById] The user ID who invited the user.
-   * @param {Date} [params.inviteDate] The date the user was invited.
+   * @param {Date} [params.inviteDate] The date the user was invited to be a manager.
    * @param {object} [params.options]
    */
   async create(params = {}) {
@@ -435,4 +435,4 @@ class WeddingUserRepo extends PaginableRepo {
   }
 }
 
-module.exports = WeddingUserRepo;
+module.exports = WeddingManagerRepo;
