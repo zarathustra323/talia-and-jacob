@@ -3,11 +3,13 @@ const { ApolloServer } = require('apollo-server-express');
 const { get, set } = require('@parameter1/utils');
 const schema = require('./schema');
 const { isProduction } = require('../env');
+const context = require('./context');
 
 const { STATUS_CODES } = http;
 
 module.exports = ({ app, path }) => {
   const server = new ApolloServer({
+    context,
     schema,
     tracing: false,
     cacheControl: false,

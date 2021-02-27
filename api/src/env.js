@@ -11,4 +11,5 @@ module.exports = cleanEnv(process.env, {
   NEW_RELIC_ENABLED: bool({ desc: 'Whether New Relic is enabled.', default: false }),
   NEW_RELIC_LICENSE_KEY: str({ desc: 'The license key for New Relic.', default: '(unset)' }),
   PORT: port({ desc: 'The port that the service will run on.', default: 80 }),
+  TOKEN_SECRET: str({ desc: 'The secret for signing JWTs' }),
 });
