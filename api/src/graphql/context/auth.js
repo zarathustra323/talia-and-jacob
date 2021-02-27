@@ -42,6 +42,20 @@ class AuthContext {
   }
 
   /**
+   * @todo This is a preliminary interface for checking roles and is not complete.
+   * @todo Update to work in a more elegant way.
+   * @param {string} action
+   */
+  async checkCan(action) {
+    switch (action) {
+      case 'wedding:register':
+        return this.isValid(); // must be logged-in
+      default:
+        throw new Error(`Unable to find an authorization action for '${action}'`);
+    }
+  }
+
+  /**
    *
    */
   isValid() {

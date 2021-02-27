@@ -5,11 +5,15 @@ const GraphQLObjectID = require('@parameter1/graphql-type-objectid');
 const pagination = require('@parameter1/graphql-mongodb-pagination/resolvers');
 
 const user = require('./user');
+const wedding = require('./wedding');
+const weddingUser = require('./wedding-user');
 
 module.exports = merge(
   pagination,
 
   user,
+  wedding,
+  weddingUser,
 
   {
     Date: GraphQLDate,

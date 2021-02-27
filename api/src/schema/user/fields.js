@@ -1,5 +1,6 @@
 const { clean, burners } = require('@parameter1/email-utils');
 const Joi = require('../../joi');
+const { createdAt, updatedAt } = require('../fields');
 
 module.exports = {
   id: Joi.mongoId(),
@@ -11,4 +12,6 @@ module.exports = {
       if (burners.isBurnerEmail(cleaned)) throw new Error('The provided email address is not allowed');
       return cleaned;
     }),
+  createdAt,
+  updatedAt,
 };

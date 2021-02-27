@@ -3,6 +3,8 @@ const projectDirectives = require('@parameter1/graphql-directive-project/directi
 const pagination = require('@parameter1/graphql-mongodb-pagination/definitions');
 
 const user = require('./user');
+const wedding = require('./wedding');
+const weddingUser = require('./wedding-user');
 
 module.exports = gql`
 
@@ -25,5 +27,7 @@ type Mutation {
 }
 
 ${user}
+${wedding}
+${weddingUser}
 
 `;
