@@ -44,13 +44,13 @@ class WeddingManagerRepo extends PaginableRepo {
     }).required(), params);
     const session = await this.client.startSession();
 
-    let member;
+    let manager;
     await session.withTransaction(async () => {
-      const mem = await this.findByObjectId({
+      const man = await this.findByObjectId({
         id,
-        options: { strict: true, projection: { 'user._id': 1, 'org.name': 1, status: 1 }, session },
+        options: { strict: true, projection: { 'user._id': 1, 'wedding.title': 1, status: 1 }, session },
       });
-      if (mem.status !== 'Invited') throw PaginableRepo.createError(400, `This user is already a member of the ${mem.org.name} organization.`);
+      if (man.status !== 'Invited') throw PaginableRepo.createError(400, `This user is already a manager of "${man.wedding.title}"`);
       const now = new Date();
       // update the invite
       await this.updateOne({
@@ -60,10 +60,10 @@ class WeddingManagerRepo extends PaginableRepo {
         },
         options: { session },
       });
-      member = await this.findByObjectId({ id, options: { ...options, session } });
+      manager = await this.findByObjectId({ id, options: { ...options, session } });
     });
     session.endSession();
-    return member;
+    return manager;
   }
 
   /**
@@ -86,14 +86,14 @@ class WeddingManagerRepo extends PaginableRepo {
       options: Joi.object().default({}),
     }).required(), params);
 
-    const member = await this.findOneFor({
+    const manager = await this.findOneFor({
       weddingId,
       userId,
       options: { ...options, projection: { role: 1 } },
     });
-    if (!member) return false;
+    if (!manager) return false;
     if (!roles.length) return true; // when no roles specified, allow
-    return roles.includes(member.role);
+    return roles.includes(manager.role);
   }
 
   /**
@@ -166,7 +166,7 @@ class WeddingManagerRepo extends PaginableRepo {
   /**
    *
    * @param {object} params
-   * @param {string|ObjectId} params.orgId
+   * @param {string|ObjectId} params.weddingId
    * @param {string} params.email
    * @param {string} params.role
    * @param {string|ObjectId} params.invitedById
@@ -176,7 +176,7 @@ class WeddingManagerRepo extends PaginableRepo {
    */
   async createInvite(params = {}) {
     const {
-      orgId,
+      weddingId,
       email,
       role,
       invitedById,
@@ -184,7 +184,7 @@ class WeddingManagerRepo extends PaginableRepo {
       ua,
       inTransaction,
     } = await validateAsync(Joi.object({
-      orgId: fields.orgId.required(),
+      weddingId: fields.weddingId.required(),
       email: userFields.email.required(),
       role: fields.role.required(),
       invitedById: userFields.id.required(),
@@ -195,7 +195,7 @@ class WeddingManagerRepo extends PaginableRepo {
 
     const session = await this.client.startSession();
 
-    let member;
+    let manager;
     let loginToken;
     await session.withTransaction(async () => {
       const user = await this.userRepo.upsertOne({
@@ -205,8 +205,8 @@ class WeddingManagerRepo extends PaginableRepo {
       });
 
       const invitedDate = new Date();
-      member = await this.create({
-        orgId,
+      manager = await this.create({
+        weddingId,
         userId: user._id,
         role,
         status: 'Invited',
@@ -214,17 +214,17 @@ class WeddingManagerRepo extends PaginableRepo {
         invitedDate,
         options: { session },
       });
-      // ensure the member is successfully created before creating the token.
-      loginToken = await this.userRepo.createOrgMemberInviteToken({
+      // ensure the manager is successfully created before creating the token.
+      loginToken = await this.userRepo.createWeddingManagerInviteToken({
         email: user.email,
         ip,
         ua,
         options: { session },
       });
-      if (isFn(inTransaction)) await inTransaction({ member, loginToken, session });
+      if (isFn(inTransaction)) await inTransaction({ manager, loginToken, session });
     });
     session.endSession();
-    return { member, loginToken };
+    return { manager, loginToken };
   }
 
   /**
@@ -356,7 +356,7 @@ class WeddingManagerRepo extends PaginableRepo {
    * @param {string} params.invitedById
    * @param {string} [params.ip]
    * @param {string} [params.ua]
-   * @param {object} [parans.object]
+   * @param {object} [params.options]
    */
   async resendInvite(params = {}) {
     const {
@@ -377,10 +377,10 @@ class WeddingManagerRepo extends PaginableRepo {
 
     const session = await this.client.startSession();
 
-    let member;
+    let manager;
     let loginToken;
     await session.withTransaction(async () => {
-      const [mem, invitedBy] = await Promise.all([
+      const [man, invitedBy] = await Promise.all([
         this.findByObjectId({
           id,
           options: { session, strict: true, projection: { user: 1, status: 1 } },
@@ -389,8 +389,8 @@ class WeddingManagerRepo extends PaginableRepo {
           id: invitedById, options: { session, strict: true, projection: { email: 1, name: 1 } },
         }),
       ]);
-      if (mem.status !== 'Invited') throw PaginableRepo.createError(400, 'This member cannot be reinvited.');
-      // update the member invite details.
+      if (man.status !== 'Invited') throw PaginableRepo.createError(400, 'This manager cannot be reinvited.');
+      // update the manager invite details.
       const now = new Date();
       await this.updateOne({
         query: { _id: id },
@@ -399,17 +399,17 @@ class WeddingManagerRepo extends PaginableRepo {
         },
       });
       // create token
-      loginToken = await this.userRepo.createOrgMemberInviteToken({
-        email: mem.user.email,
+      loginToken = await this.userRepo.createWeddingManagerInviteToken({
+        email: man.user.email,
         ip,
         ua,
         options: { session },
       });
-      member = await this.findByObjectId({ id, options });
-      if (isFn(inTransaction)) await inTransaction({ member, loginToken, session });
+      manager = await this.findByObjectId({ id, options });
+      if (isFn(inTransaction)) await inTransaction({ manager, loginToken, session });
     });
     session.endSession();
-    return { member, loginToken };
+    return { manager, loginToken };
   }
 
   /**

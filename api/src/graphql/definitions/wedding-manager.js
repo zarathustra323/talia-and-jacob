@@ -11,6 +11,27 @@ extend type Query {
     @auth
 }
 
+extend type Mutation {
+  "Accepts a pending wedding manager invite. Can only be performed by the user that was invited."
+  acceptWeddingManagerInvite(input: AcceptWeddingManagerInviteMutationInput!): WeddingManager!
+    @auth
+  "Reject a pending wedding manager invite. Can only be performed by the user that was invited."
+  rejectWeddingManagerInvite(input: RejectWeddingManagerInviteMutationInput!): String!
+    @auth
+  "Removes/deletes a wedding manager. Can only be performed by owners of the wedding."
+  removeWeddingManager(input: RemoveWeddingManagerMutationInput!): String!
+    @auth
+  "Resends an existing wedding manager email invitation."
+  resendWeddingManagerInvite(input: ResendWeddingManagerInviteMutationInput!): WeddingManager!
+    @auth
+  "Sends an email invitation for a user to become a manager of the provided wedding."
+  sendWeddingManagerInvite(input: SendWeddingManagerInviteMutationInput!): WeddingManager!
+    @auth
+  "Sets/updates the role on an existing manager. Can only be performed by owners of the wedding."
+  setWeddingManagerRole(input: SetWeddingManagerRoleMutationInput!): WeddingManager!
+    @auth
+}
+
 enum WeddingManagerRoleEnum {
   OWNER
   MEMBER
@@ -76,8 +97,13 @@ type WeddingManagerInvitation {
   acceptedAt: Date @project
 }
 
+input AcceptWeddingManagerInviteMutationInput {
+  "The wedding manager ID to accept. The current user must be the invited user in order to accept."
+  id: ObjectID!
+}
+
 input ManagersForWeddingQueryInput {
-  "The wedding ID to return members for."
+  "The wedding ID to return managers for."
   weddingId: ObjectID!
   "The manager status to filter managers by. Leaving empty will prevent filtering by status."
   status: [WeddingManagerStatusEnum!] = []
@@ -94,6 +120,37 @@ input MyManagedWeddingsQueryInput {
   sort: WeddingManagerSortInput
   "Sets pagination (limit/after) criteria for the query."
   pagination: PaginationInput = {}
+}
+
+input RejectWeddingManagerInviteMutationInput {
+  "The wedding manager ID to reject.  The current user must be the invited user in order to accept."
+  id: ObjectID!
+}
+
+input RemoveWeddingManagerMutationInput {
+  "The wedding manager ID to delete. The current user must be an owner of the wedding."
+  id: ObjectID!
+}
+
+input ResendWeddingManagerInviteMutationInput {
+  "The wedding manager ID to resend. The current user must be an owner of the wedding."
+  id: ObjectID!
+}
+
+input SendWeddingManagerInviteMutationInput {
+  "The wedding ID to invite the user to."
+  weddingId: ObjectID!
+  "The email address of the user to invite. The user does not need to previously exist."
+  email: String!
+  "The manager role to give to the user."
+  role: WeddingManagerRoleEnum!
+}
+
+input SetWeddingManagerRoleMutationInput {
+  "The wedding manager ID to set the role on. The current user must be an owner of the wedding."
+  id: ObjectID!
+  "The role to set to the manager."
+  role: WeddingManagerRoleEnum!
 }
 
 input WeddingManagerSortInput {

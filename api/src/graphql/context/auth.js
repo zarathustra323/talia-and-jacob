@@ -1,4 +1,4 @@
-const { ApolloError } = require('apollo-server-express');
+const { ApolloError, UserInputError } = require('apollo-server-express');
 const UserContext = require('./user');
 
 class AuthContext {
@@ -49,6 +49,9 @@ class AuthContext {
    * @param {object} [params]
    */
   async checkCan(action, params = {}) {
+    const userId = this.getUserId();
+    if (!action) throw new Error('Unable to authorize: no action was provided.');
+
     const checkParam = (key) => {
       if (!params[key]) throw new Error(`Unable to authorize: no '${key}' was provided.`);
     };
@@ -63,6 +66,24 @@ class AuthContext {
         return this.isValid(); // must be logged-in
       case 'wedding-manager:list-for-wedding':
         return checkManagerRole(params.weddingId); // any role
+      case 'wedding-manager:accept-invite':
+        checkParam('userId');
+        if (`${params.userId}` === `${userId}`) return true;
+        throw AuthContext.error('You do not have the proper permissions to perform this operation.', 403);
+      case 'wedding-manager:reject-invite':
+        checkParam('userId');
+        if (`${params.userId}` === `${userId}`) return true;
+        throw AuthContext.error('You do not have the proper permissions to perform this operation.', 403);
+      case 'wedding-manager:send-invite':
+        return checkManagerRole(params.weddingId, ['Owner']); // owner
+      case 'wedding-manager:resend-invite':
+        return checkManagerRole(params.weddingId, ['Owner']); // owner
+      case 'wedding-manager:set-role':
+        return checkManagerRole(params.weddingId, ['Owner']); // owner
+      case 'wedding-manager:delete':
+        checkParam('userId');
+        if (`${params.userId}` === `${userId}`) throw new UserInputError('You currently cannot remove yourself as a manager.');
+        return checkManagerRole(params.weddingId, ['Owner']); // owner
       default:
         throw new Error(`Unable to find an authorization action for '${action}'`);
     }
@@ -81,7 +102,7 @@ class AuthContext {
       userId,
       roles,
     });
-    if (!hasRole) throw AuthContext.error('You do not have the proper organization permissions to perform this operation.', 403);
+    if (!hasRole) throw AuthContext.error('You do not have the proper wedding permissions to perform this operation.', 403);
   }
 
   /**

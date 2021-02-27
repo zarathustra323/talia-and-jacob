@@ -120,6 +120,37 @@ class UserRepo extends PaginableRepo {
    *
    * @param {object} params
    * @param {string} params.email
+   * @param {string} [params.ip]
+   * @param {string} [params.ua]
+   * @param {object} [params.options]
+   */
+  async createWeddingManagerInviteToken(params = {}) {
+    const {
+      email,
+      ip,
+      ua,
+      options,
+    } = await validateAsync(Joi.object({
+      email: fields.email.required(),
+      ip: userEventFields.ip,
+      ua: userEventFields.ua,
+      options: Joi.object().default({}),
+    }).required(), params);
+
+    return this.createLoginLinkToken({
+      email,
+      ip,
+      ua,
+      ttl: 60 * 60 * 24 * 7, // one week
+      scope: 'invite',
+      options,
+    });
+  }
+
+  /**
+   *
+   * @param {object} params
+   * @param {string} params.email
    * @param {object} [params.options]
    */
   async findByEmail(params = {}) {
@@ -236,6 +267,37 @@ class UserRepo extends PaginableRepo {
       e.message = `Unable to login: ${e.message}`;
       throw e;
     }
+  }
+
+  /**
+   * @param {object} params
+   * @param {object} params.payload
+   * @param {string} params.payload.email
+   * @param {string} [params.payload.givenName]
+   * @param {string} [params.payload.familyName]
+   * @param {object} [params.findOptions]
+   * @param {object} [params.updateOptions]
+   */
+  async upsertOne(params = {}) {
+    const { payload, findOptions, updateOptions } = await validateAsync(Joi.object({
+      payload: createSchema.required(),
+      findOptions: Joi.object().default({}),
+      updateOptions: Joi.object().default({}),
+    }).required(), params);
+    const now = new Date();
+    const { email, givenName, familyName } = payload;
+    const update = {
+      $setOnInsert: {
+        email,
+        givenName,
+        familyName,
+        createdAt: now,
+        updatedAt: now,
+      },
+    };
+    const query = { email };
+    await super.updateOne({ query, update, options: { ...updateOptions, upsert: true } });
+    return super.findOne({ query, options: findOptions });
   }
 
   /**
