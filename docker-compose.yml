@@ -30,7 +30,9 @@ services:
     command: ["dev"]
     environment:
       <<: *env
+      APP_URL: ${APP_URL-http://0.0.0.0:19981}
       MONGO_URI: ${BASE_MONGO_URI-mongodb://root:password123@mongodb-primary:27017,mongodb-secondary:27017?replicaSet=guestlist&authSource=admin&readPreference=primary}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
       TOKEN_SECRET: ${TOKEN_SECRET-thisisntsecretandyoushouldusesomethingdifferentinproductiondawg}
     depends_on:
       - mongodb-secondary
