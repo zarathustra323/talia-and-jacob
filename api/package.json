@@ -18,6 +18,7 @@
     "test": "yarn lint"
   },
   "dependencies": {
+    "@parameter1/dataloader-mongodb": "^1.0.11",
     "@parameter1/email-utils": "^1.0.15",
     "@parameter1/graphql-directive-interface-fields": "^1.0.9",
     "@parameter1/graphql-directive-project": "^1.0.14",
