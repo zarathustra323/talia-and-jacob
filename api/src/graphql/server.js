@@ -21,4 +21,5 @@ module.exports = ({ app, path }) => {
     },
   });
   server.applyMiddleware({ app, path });
+  return server;
 };
