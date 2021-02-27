@@ -1,0 +1,19 @@
+{
+  "name": "talia-and-jacob",
+  "author": "Jacob Bare <jacob@parameter1.com>",
+  "private": true,
+  "repository": "https://github.com/zarathustra323/talia-and-jacob.git",
+  "license": "MIT",
+  "scripts": {
+    "lerna": "lerna",
+    "test": "lerna run test",
+    "lint": "lerna run lint"
+  },
+  "workspaces": [
+    "api",
+    "app"
+  ],
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  }
+}
