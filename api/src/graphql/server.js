@@ -1,6 +1,7 @@
 const http = require('http');
 const { ApolloServer } = require('apollo-server-express');
 const { get, set } = require('@parameter1/utils');
+const depthLimit = require('graphql-depth-limit');
 const schema = require('./schema');
 const { isProduction } = require('../env');
 const context = require('./context');
@@ -16,6 +17,7 @@ module.exports = ({ app, path }) => {
     introspection: true,
     debug: isProduction ? false : { endpoint: path },
     playground: !isProduction,
+    validationRules: [depthLimit(8)],
     formatError: (err) => {
       const code = get(err, 'extensions.exception.statusCode');
       if (code) set(err, 'extensions.code', STATUS_CODES[code].replace(/\s/g, '_').toUpperCase());
