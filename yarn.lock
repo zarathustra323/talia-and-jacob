@@ -1038,6 +1038,16 @@
     lodash.merge "^4.6.2"
     mongodb-extended-json "^1.11.0"
 
+"@parameter1/graphql-type-date@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@parameter1/graphql-type-date/-/graphql-type-date-1.0.12.tgz#0e819c65672331aee4b01912cd63255c90f61c12"
+  integrity sha512-Z4QJ6LoCrAQ9XxkmDPs8Ef+247ecGXJYuPxIq6O6lVhXHc2V8ba7RzVzbzSw0ScQnp/K1PVhWEYDnrjlAoh7pw==
+
+"@parameter1/graphql-type-objectid@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@parameter1/graphql-type-objectid/-/graphql-type-objectid-1.0.10.tgz#827acdb9ec3c6ba949c156440ffa85b9b9081fd4"
+  integrity sha512-C9/fB5GhNXgXSKO/r9ZZA88xUepdxS8+nUPOfeTfAFGCQI8hkDn5UC/AHu0KlaGu1y8O1G6QQQ0AFI6djfyFDA==
+
 "@parameter1/gulp@^1.1.11":
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/@parameter1/gulp/-/gulp-1.1.11.tgz#a2d3a52f15ea83453c819815d709c1966bbede58"

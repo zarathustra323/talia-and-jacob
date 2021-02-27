@@ -7,6 +7,9 @@ module.exports = gql`
 ${projectDirectives.typeDefs}
 directive @auth on FIELD_DEFINITION
 
+scalar Date
+scalar ObjectID
+
 ${pagination}
 
 type Query {

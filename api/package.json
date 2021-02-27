@@ -21,6 +21,8 @@
     "@parameter1/email-utils": "^1.0.15",
     "@parameter1/graphql-directive-project": "^1.0.14",
     "@parameter1/graphql-mongodb-pagination": "^2.2.4",
+    "@parameter1/graphql-type-date": "^1.0.12",
+    "@parameter1/graphql-type-objectid": "^1.0.10",
     "@parameter1/joi": "^1.2.0",
     "@parameter1/mongodb": "^1.4.7",
     "@parameter1/terminus": "^1.4.0",
