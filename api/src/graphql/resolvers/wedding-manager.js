@@ -16,7 +16,7 @@ const sendInvite = async ({ token, manager }) => {
     to: manager.user.email,
     subject: 'You\'ve been invited',
     html: `
-      <p>${sentBy.name} (${sentBy.email}) has invited you to manage their wedding, <strong>${manager.wedding.title}</strong>.</p>
+      <p>${sentBy.givenName} ${sentBy.familyName} (${sentBy.email}) has invited you to manage their wedding, <strong>${manager.wedding.title}</strong>.</p>
       <p><a href="${url}">View Invitation</a></p>
     `,
     text: `

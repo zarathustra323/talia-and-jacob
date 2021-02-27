@@ -148,7 +148,7 @@ class WeddingManagerRepo extends PaginableRepo {
     if (invitedById) {
       findOps.push(this.userRepo.findByObjectId({
         id: invitedById,
-        options: { strict: true, projection: { email: 1, name: 1 }, session },
+        options: { strict: true, projection: { email: 1, givenName: 1, familyName: 1 }, session },
       }));
     }
 
@@ -386,7 +386,12 @@ class WeddingManagerRepo extends PaginableRepo {
           options: { session, strict: true, projection: { user: 1, status: 1 } },
         }),
         this.userRepo.findByObjectId({
-          id: invitedById, options: { session, strict: true, projection: { email: 1, name: 1 } },
+          id: invitedById,
+          options: {
+            session,
+            strict: true,
+            projection: { email: 1, givenName: 1, familyName: 1 },
+          },
         }),
       ]);
       if (man.status !== 'Invited') throw PaginableRepo.createError(400, 'This manager cannot be reinvited.');

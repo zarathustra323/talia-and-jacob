@@ -40,7 +40,7 @@ module.exports = {
      *
      */
     name(user) {
-      return `${user.givenName} ${user.familyName}`;
+      return [user.givenName, user.familyName].filter((v) => v).join(' ') || null;
     },
 
     /**

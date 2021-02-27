@@ -25,9 +25,9 @@ type User implements ChangedDateInterface @interfaceFields {
   "The email address of the User. This value is required and is unique."
   email: String! @project
   "The user's given/first name."
-  givenName: String! @project
+  givenName: String @project
   "The user's family/last name."
-  familyName: String! @project
+  familyName: String @project
   "The user's full name."
   name: String @project
   "Whether the user has been verified via email."
