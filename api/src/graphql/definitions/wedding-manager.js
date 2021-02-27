@@ -5,10 +5,10 @@ module.exports = gql`
 extend type Query {
   "Finds all managed weddings belonging to the currently logged-in user. The result is paginated."
   myManagedWeddings(input: MyManagedWeddingsQueryInput = {}): WeddingManagerConnection!
-    @auth # 👍
+    @auth
   "Finds all managers for the provided wedding. The result is paginated."
   managersForWedding(input: ManagersForWeddingQueryInput!): WeddingManagerConnection!
-    @auth # 👍
+    @auth
 }
 
 enum WeddingManagerRoleEnum {

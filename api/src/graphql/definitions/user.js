@@ -4,7 +4,8 @@ module.exports = gql`
 
 extend type Query {
   "Returns the currently logged-in user. Will return an authentication error if no user is logged-in."
-  currentUser: User! @auth
+  currentUser: User!
+    @auth
 }
 
 extend type Mutation {

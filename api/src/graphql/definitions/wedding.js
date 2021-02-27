@@ -4,7 +4,8 @@ module.exports = gql`
 
 extend type Mutation {
   "Registers (creates) a new wedding and sets the current user as the owner."
-  registerNewWedding(input: RegisterNewWeddingMutationInput!): Wedding! @auth
+  registerNewWedding(input: RegisterNewWeddingMutationInput!): Wedding!
+    @auth
 }
 
 enum WeddingSortFieldEnum {
