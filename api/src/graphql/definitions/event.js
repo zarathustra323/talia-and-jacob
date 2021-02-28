@@ -8,6 +8,12 @@ extend type Mutation {
     @auth
 }
 
+enum EventSortFieldEnum {
+  ID
+  NAME
+  STARTS_AT
+}
+
 """
 Signifies an event that will occur as a part of a wedding.
 Some obvious events incude:
@@ -36,6 +42,22 @@ type Event {
   inviteByDefault: Boolean! @project
 }
 
+type EventConnection @projectUsing(type: "Event") {
+  "The total number of records found in the query."
+  totalCount: Int!
+  "An array of edge objects containing the record and the cursor."
+  edges: [EventEdge]!
+  "Contains the pagination info for this query."
+  pageInfo: PageInfo!
+}
+
+type EventEdge {
+  "The edge result node."
+  node: Event!
+  "The opaque cursor value for this record edge."
+  cursor: String!
+}
+
 type EventMeal {
   "The internal meal identifier."
   id: ObjectID!
@@ -60,6 +82,13 @@ input CreateEventMutationInput {
   endsAt: Date!
   "Whether this event is enabled for invitations by default."
   inviteByDefault: Boolean = true
+}
+
+input EventSortInput {
+  "The field to sort by."
+  field: EventSortFieldEnum
+  "The sort order, either \`DESC\` or \`ASC\`"
+  order: SortOrderEnum
 }
 
 `;

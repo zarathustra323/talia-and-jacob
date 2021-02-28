@@ -85,6 +85,21 @@ class EventRepo extends PaginableRepo {
     session.endSession();
     return event;
   }
+
+  /**
+   *
+   * @param {object} params
+   * @param {ObjectID} params.weddingId
+   * @param {object} [params.options]
+   */
+  async paginateForWedding(params = {}) {
+    const { weddingId, options } = await validateAsync(Joi.object({
+      weddingId: weddingFields.id.required(),
+      options: Joi.object().default({}),
+    }).required(), params);
+    const query = { 'wedding._id': weddingId };
+    return this.paginate({ ...options, query });
+  }
 }
 
 module.exports = EventRepo;

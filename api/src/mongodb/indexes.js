@@ -6,6 +6,7 @@ module.exports = {
     { 'wedding._id': 1 },
 
     [{ name: 1, _id: 1 }, { collation: { locale: 'en_US' } }],
+    { startsAt: 1, _id: 1 },
   ],
   tokens: [
     { audience: 1, subject: 1 },

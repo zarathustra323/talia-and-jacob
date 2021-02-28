@@ -2,6 +2,15 @@ module.exports = {
   /**
    *
    */
+  EventSortFieldEnum: {
+    ID: '_id',
+    NAME: 'name',
+    STARTS_AT: 'startsAt',
+  },
+
+  /**
+   *
+   */
   Mutation: {
     /**
      *

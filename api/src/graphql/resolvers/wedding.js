@@ -1,3 +1,4 @@
+const { connectionProjection } = require('@parameter1/graphql-directive-project/utils');
 const { WeddingManagerRoleEnum: WeddingManagerRoles } = require('./wedding-manager');
 
 module.exports = {
@@ -9,6 +10,24 @@ module.exports = {
     TITLE: 'title',
     SLUG: 'slug',
     UPDATED_AT: 'updatedAt',
+  },
+
+  /**
+   *
+   */
+  Wedding: {
+    /**
+     *
+     */
+    events(wedding, { input }, { repos }, info) {
+      const { sort, pagination } = input;
+      const options = {
+        sort,
+        projection: connectionProjection(info),
+        ...pagination,
+      };
+      return repos.event.paginateForWedding({ weddingId: wedding._id, options });
+    },
   },
 
   /**
