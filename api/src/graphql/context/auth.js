@@ -43,10 +43,8 @@ class AuthContext {
   }
 
   /**
-   * @todo This is a preliminary interface for checking roles and is not complete.
-   * @todo Update to work in a more elegant way.
    * @param {string} action
-   * @param {object} [params]
+   * @param {object} [params={}]
    */
   async checkCan(action, params = {}) {
     const userId = this.getUserId();
@@ -62,6 +60,8 @@ class AuthContext {
     };
 
     switch (action) {
+      case 'event:create':
+        return checkManagerRole(params.weddingId, ['Owner', 'Member']);
       case 'wedding:register':
         return this.isValid(); // must be logged-in
       case 'wedding-manager:list-for-wedding':

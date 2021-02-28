@@ -5,6 +5,7 @@ const GraphQLObjectID = require('@parameter1/graphql-type-objectid');
 const pagination = require('@parameter1/graphql-mongodb-pagination/resolvers');
 const GraphQLDay = require('../types/day');
 
+const event = require('./event');
 const user = require('./user');
 const wedding = require('./wedding');
 const weddingManager = require('./wedding-manager');
@@ -14,6 +15,7 @@ const genericResolveType = (_, __, info) => info.returnType.ofType.name;
 module.exports = merge(
   pagination,
 
+  event,
   user,
   wedding,
   weddingManager,

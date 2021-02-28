@@ -1,4 +1,12 @@
 module.exports = {
+  places: [
+    { updatedAt: 1, _id: 1 },
+  ],
+  events: [
+    { 'wedding._id': 1 },
+
+    [{ name: 1, _id: 1 }, { collation: { locale: 'en_US' } }],
+  ],
   tokens: [
     { audience: 1, subject: 1 },
     [{ expiresAt: 1 }, { expireAfterSeconds: 0 }],

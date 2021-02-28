@@ -4,6 +4,8 @@ const formatDateDirectives = require('@parameter1/graphql-directive-format-date/
 const interfaceDirectives = require('@parameter1/graphql-directive-interface-fields/directives');
 const pagination = require('@parameter1/graphql-mongodb-pagination/definitions');
 
+const event = require('./event');
+const google = require('./google');
 const user = require('./user');
 const wedding = require('./wedding');
 const weddingManager = require('./wedding-manager');
@@ -46,6 +48,8 @@ type Mutation {
   ping: String!
 }
 
+${event}
+${google}
 ${user}
 ${wedding}
 ${weddingManager}
