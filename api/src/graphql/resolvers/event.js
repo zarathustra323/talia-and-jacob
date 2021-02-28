@@ -1,3 +1,5 @@
+const { typeProjection } = require('@parameter1/graphql-directive-project/utils');
+
 module.exports = {
   /**
    *
@@ -6,6 +8,22 @@ module.exports = {
     ID: '_id',
     NAME: 'name',
     STARTS_AT: 'startsAt',
+  },
+
+  /**
+   *
+   */
+  Event: {
+    /**
+     *
+     */
+    place({ place }, _, { loaders }, info) {
+      const projection = typeProjection(info);
+      const localFields = ['_id'];
+      const needsQuery = Object.keys(projection).some((field) => !localFields.includes(field));
+      if (!needsQuery) return place;
+      return loaders.place.load({ id: place._id, projection });
+    },
   },
 
   /**

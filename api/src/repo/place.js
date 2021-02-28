@@ -4,7 +4,7 @@ const Joi = require('../joi');
 const PaginableRepo = require('./-paginable');
 const fields = require('../schema/google-place/fields');
 
-class VenueRepo extends PaginableRepo {
+class PlaceRepo extends PaginableRepo {
   /**
    *
    */
@@ -56,4 +56,4 @@ class VenueRepo extends PaginableRepo {
   }
 }
 
-module.exports = VenueRepo;
+module.exports = PlaceRepo;

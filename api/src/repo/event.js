@@ -1,7 +1,7 @@
 const { validateAsync } = require('@parameter1/joi/utils');
 const Joi = require('../joi');
 const PaginableRepo = require('./-paginable');
-const GooglePlaceRepo = require('./google-place');
+const PlaceRepo = require('./place');
 const WeddingRepo = require('./wedding');
 const fields = require('../schema/event/fields');
 const placeFields = require('../schema/google-place/fields');
@@ -14,7 +14,7 @@ class EventRepo extends PaginableRepo {
   constructor({
     client,
     dbName,
-    googlePlaceRepo,
+    placeRepo,
     weddingRepo,
   } = {}) {
     super({
@@ -24,9 +24,9 @@ class EventRepo extends PaginableRepo {
       client,
       collatableFields: ['name'],
     });
-    if (!(googlePlaceRepo instanceof GooglePlaceRepo)) throw new Error('The `googlePlaceRepo` must be an instance of GooglePlaceRepo');
+    if (!(placeRepo instanceof PlaceRepo)) throw new Error('The `placeRepo` must be an instance of PlaceRepo');
     if (!(weddingRepo instanceof WeddingRepo)) throw new Error('The `weddingRepo` must be an instance of WeddingRepo');
-    this.googlePlaceRepo = googlePlaceRepo;
+    this.placeRepo = placeRepo;
     this.weddingRepo = weddingRepo;
   }
 
@@ -64,7 +64,7 @@ class EventRepo extends PaginableRepo {
           id: weddingId,
           options: { strict: true, projection: { _id: 1 }, session },
         }),
-        this.googlePlaceRepo.upsertOne({
+        this.placeRepo.upsertOne({
           placeId,
           updateOptions: { session },
           findOptions: { session, projection: { _id: 1 } },

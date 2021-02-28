@@ -35,7 +35,7 @@ type Event {
   "The event end date and time. @todo Need to determine timezone here!"
   endsAt: Date! @project
   "The Google place that the event will take place at."
-  place: GooglePlace! @project
+  place: Place! @project
   "Available meal options at this event."
   meals: [EventMeal!]! @project
   "Whether this event is enabled for invitations by default."

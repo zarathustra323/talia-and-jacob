@@ -5,7 +5,7 @@ const interfaceDirectives = require('@parameter1/graphql-directive-interface-fie
 const pagination = require('@parameter1/graphql-mongodb-pagination/definitions');
 
 const event = require('./event');
-const google = require('./google');
+const place = require('./place');
 const user = require('./user');
 const wedding = require('./wedding');
 const weddingManager = require('./wedding-manager');
@@ -49,7 +49,7 @@ type Mutation {
 }
 
 ${event}
-${google}
+${place}
 ${user}
 ${wedding}
 ${weddingManager}
