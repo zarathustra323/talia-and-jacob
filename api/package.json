@@ -20,6 +20,7 @@
   "dependencies": {
     "@parameter1/dataloader-mongodb": "^1.0.11",
     "@parameter1/email-utils": "^1.0.15",
+    "@parameter1/graphql-directive-format-date": "^2.2.3",
     "@parameter1/graphql-directive-interface-fields": "^1.0.9",
     "@parameter1/graphql-directive-project": "^1.0.14",
     "@parameter1/graphql-mongodb-pagination": "^2.2.4",
@@ -31,6 +32,7 @@
     "@parameter1/utils": "^1.1.13",
     "@sendgrid/mail": "^7.4.2",
     "apollo-server-express": "^2.21.0",
+    "dayjs": "^1.10.4",
     "envalid": "^7.0.0",
     "express": "^4.17.1",
     "graphql": "^15.5.0",

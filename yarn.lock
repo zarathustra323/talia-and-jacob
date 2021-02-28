@@ -1029,6 +1029,14 @@
   dependencies:
     burner-email-providers "^1.0.38"
 
+"@parameter1/graphql-directive-format-date@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@parameter1/graphql-directive-format-date/-/graphql-directive-format-date-2.2.3.tgz#b998f3af54be19b8726182a77867e5a6044eef9b"
+  integrity sha512-HgKVxSoSxCYF27AOUq/mQIwK9FD0bEC6763mGXetC7ch726A/dQ0ZP9dQKPMKlgRsC6Hn9v/iCrZIJHWMi6Uxg==
+  dependencies:
+    "@parameter1/utils" "^1.1.13"
+    dayjs "^1.10.4"
+
 "@parameter1/graphql-directive-interface-fields@^1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@parameter1/graphql-directive-interface-fields/-/graphql-directive-interface-fields-1.0.9.tgz#a3ca9b5d5bce4e9fc09a5eb0937d222e1c585c5c"
@@ -2741,6 +2749,11 @@ dateformat@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
+
+dayjs@^1.10.4:
+  version "1.10.4"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.4.tgz#8e544a9b8683f61783f570980a8a80eaf54ab1e2"
+  integrity sha512-RI/Hh4kqRc1UKLOAf/T5zdMMX5DQIlDxwUe3wSyMMnEbGunnpENCdbUgM+dW7kXidZqCttBrmw7BhN4TMddkCw==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   version "2.6.9"

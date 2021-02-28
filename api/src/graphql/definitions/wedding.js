@@ -22,11 +22,17 @@ type Wedding implements ChangedDateInterface @interfaceFields {
   title: String! @project
   "The unique slug of this wedding. Is used for generating the sub-domain of the wedding website."
   slug: String! @project
+  "The wedding day."
+  day(input: FormatDateInput = { format: "dddd, MMMM D, YYYY" }): String!
+    @formatDate(field: "day", inputArg: "input")
+    @project
 }
 
 input RegisterNewWeddingMutationInput {
   "The wedding title."
   title: String!
+  "The wedding day date. This will be saved as the start of day, in GMT. In other words, it ignores timezones."
+  day: Day!
   "The unique slug of this wedding. If not specified, will be generated from the wedding title. This will be used for generating the sub-domain of the wedding website."
   slug: String
 }

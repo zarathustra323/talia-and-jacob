@@ -21,9 +21,9 @@ module.exports = {
     async registerNewWedding(_, { input }, { repos, auth }) {
       await auth.checkCan('wedding:register');
       const userId = auth.getUserId();
-      const { title, slug } = input;
+      const { title, slug, day } = input;
       const { wedding } = await repos.weddingManager.registerNewWedding({
-        payload: { title, slug },
+        payload: { title, slug, day: day.toDate() },
         userId,
         role: WeddingManagerRoles.OWNER,
       });

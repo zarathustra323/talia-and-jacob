@@ -26,6 +26,7 @@ class WeddingRepo extends PaginableRepo {
     const { payload, options } = await validateAsync(Joi.object({
       payload: Joi.object({
         title: fields.title.required(),
+        day: fields.day.required(),
         slug: fields.slug,
       }).required(),
       options: Joi.object().default({}),
