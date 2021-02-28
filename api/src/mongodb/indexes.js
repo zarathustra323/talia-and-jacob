@@ -1,4 +1,9 @@
 module.exports = {
+  accomodations: [
+    { 'wedding._id': 1 },
+
+    [{ name: 1, _id: 1 }, { collation: { locale: 'en_US' } }],
+  ],
   places: [
     { updatedAt: 1, _id: 1 },
   ],

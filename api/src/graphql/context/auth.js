@@ -60,6 +60,8 @@ class AuthContext {
     };
 
     switch (action) {
+      case 'accomodation:create':
+        return checkManagerRole(params.weddingId, ['Owner', 'Member']);
       case 'event:create':
         return checkManagerRole(params.weddingId, ['Owner', 'Member']);
       case 'wedding:register':

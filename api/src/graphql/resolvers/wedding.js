@@ -19,6 +19,19 @@ module.exports = {
     /**
      *
      */
+    accomodations(wedding, { input }, { repos }, info) {
+      const { sort, pagination } = input;
+      const options = {
+        sort,
+        projection: connectionProjection(info),
+        ...pagination,
+      };
+      return repos.accomodation.paginateForWedding({ weddingId: wedding._id, options });
+    },
+
+    /**
+     *
+     */
     events(wedding, { input }, { repos }, info) {
       const { sort, pagination } = input;
       const options = {
@@ -42,7 +55,7 @@ module.exports = {
       const userId = auth.getUserId();
       const { title, slug, day } = input;
       const { wedding } = await repos.weddingManager.registerNewWedding({
-        payload: { title, slug, day: day.toDate() },
+        payload: { title, slug, day },
         userId,
         role: WeddingManagerRoles.OWNER,
       });

@@ -22,7 +22,7 @@ const createDayJSFromDate = (date) => {
     .date(date.getDate())
     .startOf('day');
   validateDayJS(d);
-  return d;
+  return d.toDate();
 };
 
 const parseDate = (value) => {

@@ -22,6 +22,8 @@ type Wedding implements ChangedDateInterface @interfaceFields {
   title: String! @project
   "The unique slug of this wedding. Is used for generating the sub-domain of the wedding website."
   slug: String! @project
+  "Accomodations for this wedding."
+  accomodations(input: WeddingAccomodationsInput = {}): AccomodationConnection!
   "Events for this wedding."
   events(input: WeddingEventsInput = {}): EventConnection!
   "The wedding day."
@@ -37,6 +39,13 @@ input RegisterNewWeddingMutationInput {
   day: Day!
   "The unique slug of this wedding. If not specified, will be generated from the wedding title. This will be used for generating the sub-domain of the wedding website."
   slug: String
+}
+
+input WeddingAccomodationsInput {
+  "Sets sorting criteria for the query."
+  sort: AccomodationSortInput
+  "Sets pagination (limit/after) criteria for the query."
+  pagination: PaginationInput = {}
 }
 
 input WeddingEventsInput {

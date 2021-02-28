@@ -2,6 +2,7 @@ const client = require('../mongodb');
 const { DB_NAME: dbName } = require('../mongodb/constants');
 const googleMaps = require('../google-maps');
 
+const Accomodation = require('./accomodation');
 const Event = require('./event');
 const Place = require('./place');
 const Token = require('./token');
@@ -23,6 +24,13 @@ const user = new User({
 
 const wedding = new Wedding({ client, dbName });
 
+const accomodation = new Accomodation({
+  client,
+  dbName,
+  placeRepo: place,
+  weddingRepo: wedding,
+});
+
 const event = new Event({
   client,
   dbName,
@@ -38,6 +46,7 @@ const weddingManager = new WeddingManager({
 });
 
 module.exports = {
+  accomodation,
   event,
   place,
   token,

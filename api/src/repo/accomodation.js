@@ -3,11 +3,11 @@ const Joi = require('../joi');
 const PaginableRepo = require('./-paginable');
 const PlaceRepo = require('./place');
 const WeddingRepo = require('./wedding');
-const fields = require('../schema/event/fields');
+const fields = require('../schema/accomodation/fields');
 const placeFields = require('../schema/place/fields');
 const weddingFields = require('../schema/wedding/fields');
 
-class EventRepo extends PaginableRepo {
+class AccomodationRepo extends PaginableRepo {
   /**
    *
    */
@@ -18,8 +18,8 @@ class EventRepo extends PaginableRepo {
     weddingRepo,
   } = {}) {
     super({
-      name: 'event',
-      collectionName: 'events',
+      name: 'accomodation',
+      collectionName: 'accomodations',
       dbName,
       client,
       collatableFields: ['name'],
@@ -34,32 +34,28 @@ class EventRepo extends PaginableRepo {
    * @param {object} params
    * @param {ObjectID} params.weddingId
    * @param {string} params.placeId
+   * @param {string} [params.description]
+   * @param {object} [params.roomBlock]
    * @param {object} [params.options]
    */
   async create(params = {}) {
     const {
       weddingId,
       placeId,
-      name,
       description,
-      startsAt,
-      endsAt,
-      inviteByDefault,
+      roomBlock,
       options,
     } = await validateAsync(Joi.object({
       weddingId: weddingFields.id.required(),
       placeId: placeFields.id.required(),
-      name: fields.name.required(),
       description: fields.description,
-      startsAt: fields.startsAt.required(),
-      endsAt: fields.endsAt.required(),
-      inviteByDefault: fields.inviteByDefault.default(true),
+      roomBlock: fields.roomBlock,
       options: Joi.object().default({}),
     }).required(), params);
 
     const session = await this.client.startSession();
 
-    let event;
+    let accomodation;
     await session.withTransaction(async () => {
       const [wedding, place] = await Promise.all([
         this.weddingRepo.findByObjectId({
@@ -76,16 +72,13 @@ class EventRepo extends PaginableRepo {
       const doc = {
         wedding,
         place,
-        name,
         description,
-        startsAt,
-        endsAt,
-        inviteByDefault,
+        roomBlock,
       };
-      event = await this.insertOne({ doc, options: { ...options, withDates: true } });
+      accomodation = await this.insertOne({ doc, options: { ...options, withDates: true } });
     });
     session.endSession();
-    return event;
+    return accomodation;
   }
 
   /**
@@ -104,4 +97,4 @@ class EventRepo extends PaginableRepo {
   }
 }
 
-module.exports = EventRepo;
+module.exports = AccomodationRepo;

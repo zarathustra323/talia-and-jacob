@@ -2,7 +2,7 @@ const { validateAsync } = require('@parameter1/joi/utils');
 const { get } = require('@parameter1/utils');
 const Joi = require('../joi');
 const PaginableRepo = require('./-paginable');
-const fields = require('../schema/google-place/fields');
+const fields = require('../schema/place/fields');
 
 class PlaceRepo extends PaginableRepo {
   /**
