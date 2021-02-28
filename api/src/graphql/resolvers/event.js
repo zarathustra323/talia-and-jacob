@@ -24,6 +24,17 @@ module.exports = {
       if (!needsQuery) return place;
       return loaders.place.load({ id: place._id, projection });
     },
+
+    /**
+     *
+     */
+    wedding({ wedding }, _, { loaders }, info) {
+      const projection = typeProjection(info);
+      const localFields = ['_id'];
+      const needsQuery = Object.keys(projection).some((field) => !localFields.includes(field));
+      if (!needsQuery) return wedding;
+      return loaders.wedding.load({ id: wedding._id, projection });
+    },
   },
 
   /**
